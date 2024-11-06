@@ -60,3 +60,5 @@ gray_image=cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
 blurred_image=cv2.GaussianBlur(gray_image,(5,5),0)
 edges=cv2.Canny(blurred_image,threshold1=150,threshold2=250)
 plt 
+
+hello world***
