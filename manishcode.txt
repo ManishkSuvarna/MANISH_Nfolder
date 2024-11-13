@@ -64,3 +64,30 @@ plt
 hello world***
 
 @##**& new changes
+
+import cv2 as cv
+import numpy as np
+from matplotlib import pyplot as plt
+img=cv.imread('C:/Users/Lenovo/Downloads/IMAGE1.JPG',cv.IMREAD_GRAYSCALE)
+img2=img.copy()
+template=cv.imread('C:/Users/Lenovo/Downloads/IMAGE21.JPG',cv.IMREAD_GRAYSCALE)
+w,h=template.shape[::-1]
+methods=['TM_CCOEFF','TM_CCOEFF_NORMED','TM_CCORR','TM_CCORR_NORMED','TM_SQDIFF','TM_SQDIFF_NORMED']
+
+for math in methods:
+    img=img2.copy()
+    method=getattr(cv,math)
+    res=cv.matchTemplate(img,template,method)
+    min_val,max_val,min_loc,max_loc=cv.minMaxLoc(res)
+    if method in [cv.TM_SQDIFF,cv.TM_SQDIFF_NORMED]:
+        top_left=min_loc
+    else:
+        top_left=max_loc
+    bottom_right=(top_left[0]+w,top_left[1]+h)
+    cv.rectangle(img,top_left,bottom_right,255,2)
+    plt.subplot(121),plt.imshow(res,cmap='gray')
+    plt.title('Maching Result'),plt.xticks([]),plt.yticks([])
+    plt.subplot(122),plt.imshow(img,cmap='gray')
+    plt.title('Detected Point'),plt.xticks([]),plt.yticks([])
+    plt.suptitle(math)
+    plt.show()
