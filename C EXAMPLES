@@ -1,0 +1,308 @@
+calculate employee salary
+
+#include <stdio.h>
+
+
+int totalsalary(int empid){
+  int bsalary=25000,ex,tsalary;
+  printf("enter the no years of expirience forthe employ having id:%d\n",empid);
+  scanf("%d",&ex);
+  tsalary=bsalary+(ex*2000);
+  return tsalary;
+}
+int main() {
+   int empid,empsalary;
+   
+printf("enter the employ id details to check total salary\n");
+scanf("%d",&empid);
+empsalary=totalsalary(empid);
+printf("employee id %d employee salary is:%d",empid,empsalary);
+    return 0;
+}
+
+string operations
+
+
+#include <stdio.h>
+#include<ctype.h>
+#include<string.h>
+
+void removespace(char *str){
+  int count = 0;
+  
+   for (int i = 0; str[i]; i++)
+        if (str[i] != ' ')
+            str[count++] = str[i];
+        str[count]='\0' ;   
+  
+}
+void lower(char *str){
+    for (int i = 0; str[i]; i++) {
+        str[i] = tolower(str[i]);
+    }
+}
+void string(char *str){
+
+ for(int i=0;str[i];i++){
+      if(str[i]>=65&&str[i]<=90){
+         str[i]=str[i]+32;
+      }
+   }
+  
+   printf("username without string function=%s\n",str);
+    }
+
+
+int main() {
+  char str[30],username[30]="Good Morning Have A Nice Day";
+  int i=0;
+   while (username[i]) {
+        str[i] = username[i];  
+        i++;
+    }
+ 
+ removespace(username);
+
+  lower(username);
+  printf("username with string function=%s\n",username);
+  
+  string(username);
+    return 0;
+}
+
+
+sorting problem
+
+
+#include <stdio.h>
+
+void bubblesort(int *arr, int n) {
+     int temp;
+    for (int i=0;i<n-1;i++) {
+     
+        for (int j=0;j< n-i-1;j++) {
+            if (arr[j]>arr[j+1]){
+               temp=arr[j];
+               arr[j]=arr[j+1];
+               arr[j+1]=temp;
+        }
+        }
+    }
+    printf("sorted product prices\n");
+    for(int i=0;i<n;i++)
+    {
+        printf("%d\t",arr[i]);
+    }
+}
+
+
+int main() {
+    int arr[40],n;
+    printf("enter the number of products\n");
+    scanf("%d",&n);
+    printf("enter the each product prices\n");
+    for(int i=0;i<n;i++){
+        scanf("%d",&arr[i]);
+    }
+   bubblesort(arr,n);
+    
+  return 0;
+}
+
+product management system
+
+
+
+#include <stdio.h>
+#include <string.h>
+#include<stdlib.h>
+
+#define MAX 100 
+
+
+typedef struct {
+    int id;
+    char name[50];
+    char description[100];
+    float price;
+    int quantity;
+} Product;
+
+Product prod[MAX];  
+int Count = 0;
+
+
+void addProduct() {
+    if (Count >= MAX) {
+        printf("Product list is full!\n");
+        return;
+    }
+
+    printf("\nEnter product details:\n");
+    printf("ID: ");
+    scanf("%d", &prod[Count].id);
+     
+
+    printf("Name: ");
+    fgets(prod[Count].name, sizeof(prod[Count].name), stdin);
+    strtok(prod[Count].name, "\n"); 
+
+    printf("Description: ");
+    fgets(prod[Count].description, sizeof(prod[Count].description), stdin);
+    strtok(prod[Count].description, "\n");
+
+    printf("Price: ");
+    scanf("%f", &prod[Count].price);
+    
+    printf("Quantity: ");
+    scanf("%d", &prod[Count].quantity);
+
+    Count++;
+    printf("Product added successfully!\n");
+}
+
+
+void displayProducts() {
+    if (Count == 0) {
+        printf("\nNo products available.\n");
+        return;
+    }
+
+    printf("\nProduct List:\n");
+    printf("ID\tName\t\tPrice\tQuantity\tDescription\n");
+    printf("-------------------------------------------------------------\n");
+
+    for (int i = 0; i < Count; i++) {
+        printf("%d\t%s\t\t%.2f\t%d\t%s\n", prod[i].id, prod[i].name,
+               prod[i].price, prod[i].quantity, prod[i].description);
+    }
+}
+
+
+void searchProduct() {
+    int choice, searchId;
+    char searchName[50];
+
+    printf("\nSearch by: 1. ID  2. Name\nEnter choice: ");
+    scanf("%d", &choice);
+    getchar();
+
+    if (choice == 1) {
+        printf("Enter product ID: ");
+        scanf("%d", &searchId);
+
+        for (int i = 0; i < Count; i++) {
+            if (prod[i].id == searchId) {
+                printf("\nProduct Found:\n");
+                printf("ID: %d\nName: %s\nDescription: %s\nPrice: %.2f\nQuantity: %d\n",
+                       prod[i].id, prod[i].name, prod[i].description,
+                       prod[i].price, prod[i].quantity);
+                return;
+            }
+        }
+    } else if (choice == 2) {
+        printf("Enter product name: ");
+        fgets(searchName, sizeof(searchName), stdin);
+        
+
+        for (int i = 0; i < Count; i++) {
+            if (strcmp(prod[i].name, searchName) == 0) {
+                printf("\nProduct Found:\n");
+                printf("ID: %d\nName: %s\nDescription: %s\nPrice: %.2f\nQuantity: %d\n",
+                       prod[i].id, prod[i].name, prod[i].description,
+                       prod[i].price, prod[i].quantity);
+                return;
+            }
+        }
+    }
+
+    printf("Product not found!\n");
+}
+
+
+void updateProduct() {
+    int updateId;
+    printf("Enter product ID to update: ");
+    scanf("%d", &updateId);
+    getchar(); // Consume newline
+
+    for (int i = 0; i < Count; i++) {
+        if (prod[i].id == updateId) {
+            printf("\nUpdating Product %d:\n", updateId);
+
+            printf("New Name: ");
+            fgets(prod[i].name, sizeof(prod[i].name), stdin);
+            strtok(prod[i].name, "\n");
+
+            printf("New Description: ");
+            fgets(prod[i].description, sizeof(prod[i].description), stdin);
+            strtok(prod[i].description, "\n");
+
+            printf("New Price: ");
+            scanf("%f", &prod[i].price);
+
+            printf("New Quantity: ");
+            scanf("%d", &prod[i].quantity);
+
+            printf("Product updated successfully!\n");
+            return;
+        }
+    }
+    printf("Product with ID %d not found!\n", updateId);
+}
+
+
+void deleteProduct() {
+    int deleteId;
+    printf("Enter product ID to delete: ");
+    scanf("%d", &deleteId);
+
+    for (int i = 0; i < Count; i++) {
+        if (prod[i].id == deleteId) {
+            for (int j = i; j < Count - 1; j++) {
+                prod[j] = prod[j + 1];
+            }
+            Count--;
+            printf("Product deleted successfully!\n");
+            return;
+        }
+    }
+    printf("Product with ID %d not found!\n", deleteId);
+}
+
+
+int main() {
+    int choice;
+    
+    while (1) {
+        printf("\nProduct Management System\n1. Add Product\n2. Display Products\n3. Search Product\n4. Update Product\n5. Delete Product\n6. Exit\nEnter your choice:");
+        
+        scanf("%d", &choice);
+        
+
+        switch (choice) {
+            case 1:
+                addProduct();
+                break;
+            case 2:
+                displayProducts();
+                break;
+            case 3:
+                searchProduct();
+                break;
+            case 4:
+                updateProduct();
+                break;
+            case 5:
+                deleteProduct();
+                break;
+            case 6:
+                printf("Exiting program...\n");
+                exit(0);
+            default:
+                printf("Invalid choice! Try again.\n");
+        }
+    }
+
+    return 0;
+}
